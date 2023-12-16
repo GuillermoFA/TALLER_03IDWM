@@ -33,7 +33,8 @@ builder.Services.AddAuthentication().AddJwtBearer(opt =>
 {
     try
     {
-        var tokenKey = builder.Configuration.GetSection("AppSettings:Token").Value!;
+        // Accede a la clave del token directamente desde las variables de entorno
+        var tokenKey = Env.GetString("SECRET_TOKEN");
         
         if (string.IsNullOrEmpty(tokenKey))
         {
