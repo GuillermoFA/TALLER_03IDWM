@@ -66,8 +66,12 @@ namespace MobileHub.Data.Controllers
             user = await _context.Users.FirstOrDefaultAsync(x => x.Rut == registerDto.Rut);
             if (user != null) return BadRequest("El rut ya está registrado");
 
+            // Asignar la contraseña como el RUT sin puntos ni guiones
+            string password = rutWithoutDots;
+
+            // Hash de la contraseña (puedes usar tu método actual de hash si es necesario)
             var salt = BCrypt.Net.BCrypt.GenerateSalt(12);
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password, salt);
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
             user = new User
             {
