@@ -5,7 +5,7 @@
 namespace MobileHub.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class testing : Migration
+    public partial class addingFuncionality : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

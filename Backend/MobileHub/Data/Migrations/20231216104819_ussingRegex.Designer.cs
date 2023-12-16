@@ -10,8 +10,8 @@ using MobileHub.Data;
 namespace MobileHub.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231216101331_testing")]
-    partial class testing
+    [Migration("20231216104819_ussingRegex")]
+    partial class ussingRegex
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -10,7 +10,6 @@ namespace MobileHub.DTO
         public string Email { get; set; } = null!;
 
         [Required]
-        [Rut]
         public string Rut { get; set; } = null!;
 
         [Required]
