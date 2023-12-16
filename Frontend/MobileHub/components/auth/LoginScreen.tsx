@@ -2,6 +2,7 @@ import { Button, Text, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, Image } from "react-native";
 import { useState } from "react";
+import { Link } from "expo-router";
 
 const style = StyleSheet.create({
     container: {
@@ -70,9 +71,12 @@ const LoginScreen = () => {
                     right={
                         <TextInput.Icon icon={showPassword ? "eye-off" : "eye"} onPress={handleShowPassword} />
                     }></TextInput>
+        <Link href={"/home/"} asChild replace>
         <Button style={style.button} mode="contained" onPress={handleSubmit}>
             Ingresar
         </Button>
+        </Link>
+
     </SafeAreaView>
 
    )
