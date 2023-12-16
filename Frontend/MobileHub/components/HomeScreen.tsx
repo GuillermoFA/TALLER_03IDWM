@@ -1,6 +1,7 @@
 import { Button, Text} from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, Image } from "react-native";
+import { Link } from "expo-router";
 
 
 
@@ -25,9 +26,11 @@ const HomeScreen = () => {
     return (
         <SafeAreaView style={style.container}>
             <Image source={require('../assets/images/MobileHub.png')} style={style.image}/>
+            <Link href="/auth/login" asChild>
             <Button mode="contained" onPress={() => console.log('Login Pressed')} style={style.button}>
                 Iniciar Sesión
             </Button>
+            </Link>
             <Button mode="outlined" onPress={() => console.log('Register Pressed')} style={style.button}>
                 Regístrarme
             </Button>

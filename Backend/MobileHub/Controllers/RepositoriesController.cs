@@ -1,5 +1,6 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Mvc;
+using MobileHub.DTO;
 using Octokit;
 
 namespace MobileHub.Controllers
@@ -10,31 +11,35 @@ namespace MobileHub.Controllers
     {
 
 
-        private GitHubClient ClientProvider()   
-        {
-            Env.Load();
-
-            var client = new GitHubClient(new ProductHeaderValue("MobileHub"));
-            var myToken = Env.GetString("GITHUB_ACCESS_TOKEN");
-            var tokenAuth = new Credentials(myToken);
-            client.Credentials = tokenAuth;
-            return client;
-
-        }
-        
         [HttpGet]
-        public async Task<ActionResult<List<Repository>>> GetAll()
+        public async Task<ActionResult<IEnumerable<RepositoryDto>>> GetAll()
         {
-            var client = ClientProvider();
-            var response = await GetAllRepositories(client);
-            return Ok(response);
+            var client = new GitHubClient(new ProductHeaderValue("MobileHub"));
+            var tokenAuth = Env.GetString("GITHUB_ACCESS_TOKEN");
+            client.Credentials = new Credentials(tokenAuth);
+
+            var repositories = await client.Repository.GetAllForUser("Dizkm8");
+
+            var mappedRepositories = repositories.Select(r => {
+
+                var entity = new RepositoryDto
+                {
+                    Name = r.Name,
+                    CreatedAt = r.CreatedAt,
+                    UpdatedAt = r.UpdatedAt,
+                    CommitsAmount = 0,
+                };
+                return entity;
+
+            });
+
+            return Ok(mappedRepositories);
+
+
         }
 
-        private async Task<IReadOnlyList<Repository>> GetAllRepositories(GitHubClient client)
-        {
-            var repositories = await client.Repository.GetAllForUser("Dizkm8");
-            repositories = repositories.OrderByDescending(x => x.CreatedAt).ToList();
-            return repositories;
-        }
+
+
+
     }
 }
