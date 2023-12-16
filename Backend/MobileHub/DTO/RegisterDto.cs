@@ -14,7 +14,15 @@ namespace MobileHub.DTO
         public string Rut { get; set; } = null!;
 
         [Required]
+        [YearOfBirth]
         public int BirthYear { get; set; }
+
+        [Required]
+        [StringLength(150, MinimumLength = 10, ErrorMessage = "El nombre completo debe tener entre 10 y 150 caracteres.")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        public string Password { get; set; } = string.Empty;
         
     }
 }
