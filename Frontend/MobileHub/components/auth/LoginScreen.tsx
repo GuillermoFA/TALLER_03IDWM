@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Snackbar, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
-import { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -31,59 +30,73 @@ const LoginScreen = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleEmailChange = (email: string) => {
-    setEmail(email);
+  const handleEmailChange = (text: string) => {
+    setEmail(text);
   };
 
-  const handlePasswordChange = (password: string) => {
-    setPassword(password);
+  const handlePasswordChange = (text: string) => {
+    setPassword(text);
   };
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const onDismissError = () => {
+  const clearError = () => {
     setError('');
+  };
+
+  const displayError = (message: string) => {
+    setError(message);
+  };
+
+  const handleLoginSuccess = () => {
+    router.push('/home/');
+  };
+
+  const handleAxiosError = (error: any) => {
+    if (error.response) {
+      if (error.response.status === 400) {
+        displayError('Faltan campos por rellenar. Por favor, completa todos los campos.');
+      } else if (error.response.status === 401) {
+        displayError('Credenciales inválidas. Verifica tu correo y contraseña.');
+      } else {
+        displayError(`Error: ${error.response.data}`);
+      }
+    } else if (error.message === 'Network Error') {
+      displayError('Error de red. Verifica tu conexión.');
+    } else {
+      displayError('Error al iniciar sesión. Verifica tus credenciales.');
+    }
   };
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://192.168.1.183:5245/Auth/Login', {
+      const response = await axios.post('http://192.168.1.183:5245/Auth/login', {
         email,
         password,
       });
-  
+
       console.log(response.data);
-  
+
       if (response.data && response.data.token) {
-        // Almacena el token de forma segura
         await AsyncStorage.setItem('token', response.data.token);
-  
-        // Verifica si el código de estado es 200 antes de navegar a la pantalla de inicio
+
         if (response.status === 200) {
-          router.push('/home/');
+          handleLoginSuccess();
         } else {
-          setError('Error al iniciar sesión. Verifica tus credenciales.');
+          displayError('Error al iniciar sesión. Verifica tus credenciales.');
         }
       } else {
-        setError('Credenciales inválidas. Verifica tu correo y contraseña.');
+        displayError('Credenciales inválidas. Verifica tu correo y contraseña.');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-  
       if (axios.isAxiosError(error)) {
-        if (error.response) {
-          setError(`Error: ${error.response.data}`);
-        } else if (error.message === 'Network Error') {
-          setError('Error de red. Verifica tu conexión.');
-        } else {
-          setError('Error al iniciar sesión. Verifica tus credenciales.');
-        }
+        handleAxiosError(error);
       } else {
-        // Si el error no es de tipo Axios, manejarlo de manera genérica
-        setError('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
+        displayError('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
       }
     } finally {
       setLoading(false);
@@ -91,10 +104,10 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaView style={style.container}>
+    <SafeAreaView style={styles.container}>
       <Text variant="displayMedium">Iniciar Sesión</Text>
       <TextInput
-        style={style.form}
+        style={styles.form}
         label="Correo Electrónico"
         placeholder="correo@ucn.cl"
         placeholderTextColor="#B2B2B2"
@@ -105,7 +118,7 @@ const LoginScreen = () => {
         disabled={loading}
       />
       <TextInput
-        style={style.button}
+        style={styles.button}
         label="Contraseña"
         secureTextEntry={showPassword}
         placeholder={showPassword ? '********' : 'Tu contraseña'}
@@ -117,17 +130,22 @@ const LoginScreen = () => {
         right={<TextInput.Icon icon={showPassword ? 'eye-off' : 'eye'} onPress={handleShowPassword} />}
         disabled={loading}
       />
-      <Button style={style.button} mode="contained" onPress={handleSubmit}>
+      <Button style={styles.button} mode="contained" onPress={handleSubmit}>
         Ingresar
       </Button>
 
       {/* Agrega el componente Snackbar para mostrar mensajes de error */}
       <Snackbar
         visible={error !== ''}
-        onDismiss={onDismissError}
+        onDismiss={clearError}
         action={{
           label: 'OK',
-          onPress: onDismissError,
+          onPress: clearError,
+        }}
+        style={{
+          backgroundColor: 'red', // Color de fondo rojo sólido
+          borderRadius: 8, // Bordes redondeados
+          marginBottom: 20, // Espaciado inferior
         }}
       >
         {error}

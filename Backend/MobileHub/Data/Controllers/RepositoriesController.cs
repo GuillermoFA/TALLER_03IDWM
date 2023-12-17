@@ -52,6 +52,28 @@ namespace MobileHub.Controllers
 
         }
 
+        [HttpGet("{repositoryName}")]
+        public async Task<ActionResult<IEnumerable<CommitDto>>> GetAllRepositoryCommits(string repositoryName)
+        {
+            var client = new GitHubClient(new ProductHeaderValue("MobileHub"));
+            var myToken = Env.GetString("GITHUB_ACCESS_TOKEN");
+            var tokenCred = new Credentials(myToken);
+            client.Credentials = tokenCred;
+
+            var commits = await client.Repository.Commit.GetAll("Dizkm8", repositoryName);
+
+            if (commits is null) return BadRequest("No se encuentran repositorios.");
+            var mappedCommits = commits.Select(c => new CommitDto
+            {
+                Author = c.Author.Login,
+                Message = c.Commit.Message,
+                Date = c.Commit.Author.Date
+            });
+
+            return Ok(mappedCommits);
+
+        }
+
 
 
     }

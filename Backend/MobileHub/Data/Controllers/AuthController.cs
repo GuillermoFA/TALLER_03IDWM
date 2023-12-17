@@ -57,14 +57,14 @@ namespace MobileHub.Data.Controllers
             string rutWithoutDots = registerDto.Rut.Replace(".", "");
             if (!MyRegex().IsMatch(rutWithoutDots))
             {
-                return BadRequest("El formato del RUT no es válido");
+                return BadRequest(new { errors = new { rut = "El formato del RUT no es válido" } });
             }
             
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == registerDto.Email);
-            if (user != null) return BadRequest("El email ya está registrado");
+            if (user != null) return BadRequest(new { errors = new { email = "El email ya está registrado" } });
 
             user = await _context.Users.FirstOrDefaultAsync(x => x.Rut == registerDto.Rut);
-            if (user != null) return BadRequest("El rut ya está registrado");
+            if (user != null) return BadRequest(new { errors = new { rut = "El RUT ya está registrado" } });
 
             // Asignar la contraseña como el RUT sin puntos ni guiones
             string password = rutWithoutDots;
@@ -94,7 +94,7 @@ namespace MobileHub.Data.Controllers
                 Name = createdUser.Name,
             };
 
-            return LoggedUserDto;
+            return Ok(LoggedUserDto);
         }
 
         private string CreateToken(User user)
