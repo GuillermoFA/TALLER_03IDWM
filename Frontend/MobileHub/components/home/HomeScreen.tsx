@@ -6,7 +6,7 @@ import { Repository } from "../../models/Repository";
 import axios from 'axios';
 import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 
 const style = StyleSheet.create({
@@ -78,6 +78,14 @@ const HomeScreen = () => {
         );
     }
 
+    const handleButtonPress = (repositoryName: string) => {
+        console.log("Repository Name:", repositoryName);
+        router.push({
+            pathname: "/home/repository",
+            params: { repositoryName },
+        });
+    };
+
     return (
         <SafeAreaView style={style.container}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -99,11 +107,11 @@ const HomeScreen = () => {
                         <Text variant = {"bodyMedium"}>Commits realizados: {repo.commitsAmount} </Text>
                     </Card.Content>
                     <Card.Actions>
-                        <Button
-                        onPress={() => console.log("Presionado")}
-                        mode={"contained"}>
-                            Ver más
-                        </Button>
+                    <Button
+                    onPress={() => handleButtonPress(repo.name)}
+                    mode={"contained"}>
+                    Ver más
+                </Button>
                     </Card.Actions>
                 </Card>
             ))} 

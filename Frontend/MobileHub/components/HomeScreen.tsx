@@ -31,7 +31,7 @@ const HomeScreen = () => {
                 Iniciar Sesión
             </Button>
             </Link>
-            <Link href="/auth/register" asChild>
+            <Link href="/auth/register" asChild replace>
             <Button mode="outlined" onPress={() => console.log('Register Pressed')} style={style.button}>
                 Regístrarme
             </Button>
