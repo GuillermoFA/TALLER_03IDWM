@@ -4,12 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MobileHub.Data;
 
+// Path: Backend/MobileHub/Program.cs
 var builder = WebApplication.CreateBuilder(args);
 
+// Carga las variables de entorno desde el archivo .env
 Env.Load();
+
+// Configura CORS para permitir peticiones desde el frontend
 var ip = Env.GetString("LOCAL_IP");
+
 var mobileHubOrigin = "_mobilehub";
 
+// Configura CORS para permitir peticiones desde el frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: mobileHubOrigin,

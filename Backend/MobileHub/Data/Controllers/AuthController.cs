@@ -9,7 +9,10 @@ using MobileHub.DTO;
 using MobileHub.Models;
 
 namespace MobileHub.Data.Controllers
-{
+{   
+    /// <summary>
+    /// Clase AuthController.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public partial class AuthController : ControllerBase
@@ -25,14 +28,18 @@ namespace MobileHub.Data.Controllers
         }
 
 
-
+        /// <summary>
+        /// Endpoint para logearse.
+        /// </summary>
+        /// <param name="loginDto"> Parametros del usuario al momento de logearse</param>
+        /// <returns>STATUS 200. Logeo exitoso</returns>
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == loginDto.Email);
-            if (user is null) return Unauthorized("Credenciales Inválidas");
-            var result = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password);
-            if(!result) return Unauthorized("Credenciales Inválidas");
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == loginDto.Email); // Verifica si el usuario existe
+            if (user is null) return Unauthorized("Credenciales Inválidas"); // Si no existe, retorna un error
+            var result = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password); // Verifica si la contraseña es correcta
+            if(!result) return Unauthorized("Credenciales Inválidas"); // Si no es correcta, retorna un error
 
             string token = CreateToken(user);
 
@@ -49,21 +56,26 @@ namespace MobileHub.Data.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Endpoint para registrar un usuario.
+        /// </summary>
+        /// <param name="registerDto">Datos solicitados para que el cliente rellene para el register</param>
+        /// <returns>Usuario registrado en el sistema.</returns>
         [HttpPost("register")]
         public async Task<ActionResult<LoggedUserDto>> Register(RegisterDto registerDto)
         {
             // Validar el formato del RUT chileno utilizando una expresión regular
             // Eliminar puntos del RUT y validar el formato del RUT chileno utilizando una expresión regular
-            string rutWithoutDots = registerDto.Rut.Replace(".", "");
+            string rutWithoutDots = registerDto.Rut.Replace(".", ""); 
             if (!MyRegex().IsMatch(rutWithoutDots))
             {
                 return BadRequest("El formato del RUT no es válido");
             }
             
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == registerDto.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == registerDto.Email); // Verifica si el email existe
             if (user != null) return BadRequest("El email ya está registrado");
 
-            user = await _context.Users.FirstOrDefaultAsync(x => x.Rut == registerDto.Rut);
+            user = await _context.Users.FirstOrDefaultAsync(x => x.Rut == registerDto.Rut); // Verifica si el rut existe
             if (user != null) return BadRequest("El rut ya está registrado");
 
             // Asignar la contraseña como el RUT sin puntos ni guiones
@@ -85,7 +97,7 @@ namespace MobileHub.Data.Controllers
             var createdUser = (await _context.Users.AddAsync(user)).Entity;
             await _context.SaveChangesAsync();
 
-            var token = CreateToken(createdUser);
+            var token = CreateToken(createdUser); // Crear el token
 
             var LoggedUserDto = new LoggedUserDto
             {
@@ -94,9 +106,14 @@ namespace MobileHub.Data.Controllers
                 Name = createdUser.Name,
             };
 
-            return LoggedUserDto;
+            return LoggedUserDto;  // Retorna el usuario creado
         }
 
+        /// <summary>
+        /// Metodo CreateToken crea el TOKEN para register y login
+        /// </summary>
+        /// <param name="user">Usuario que contiene el token</param>
+        /// <returns></returns>
         private string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>(){
@@ -105,9 +122,9 @@ namespace MobileHub.Data.Controllers
                 new Claim("email", "" + user.Email),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!)); // Obtener la llave secreta
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature); 
 
             var token = new JwtSecurityToken(
                 claims: claims,
@@ -115,7 +132,7 @@ namespace MobileHub.Data.Controllers
                 signingCredentials: creds
             );
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token); // Crear el token
             return jwt;
         }
 

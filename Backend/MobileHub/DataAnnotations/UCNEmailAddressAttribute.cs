@@ -17,6 +17,11 @@ namespace MobileHub.DataAnnotations
         {
         }
 
+        /// <summary>
+        /// Validacion del email
+        /// </summary>
+        /// <param name="value">Retorna false si no pasa las pruebas y true si las pasa. Valor = Email ingresado</param>
+        /// <returns></returns>
         public override bool IsValid(object? value)
         {
             if(value is not string email)

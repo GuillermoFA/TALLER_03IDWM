@@ -5,12 +5,17 @@ using Octokit;
 
 namespace MobileHub.Controllers
 {
+    /// <summary>
+    /// Clase RepositoriesController.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class RepositoriesController : ControllerBase
     {
-
-
+        /// <summary>
+        /// Endpoint para obtener todos los repositorios de un usuario.
+        /// </summary>
+        /// <returns>Lista de repositorios</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RepositoryDto>>> GetAll()
         {
@@ -46,12 +51,17 @@ namespace MobileHub.Controllers
 
         private async Task<int> GetCommitsByRepository ( GitHubClient client, string repoName)
         {
-            var commits = await client.Repository.Commit.GetAll("Dizkm8", repoName);
+            var commits = await client.Repository.Commit.GetAll("Dizkm8", repoName); // TODO: Obtener los commits de un repositorio
             if(commits is null) return 0;
             return commits.Count;
 
         }
 
+        /// <summary>
+        /// Endpoint para obtener un repositorio en específico
+        /// </summary>
+        /// <param name="repositoryName">Nombre del repositorio</param>
+        /// <returns>El repositorio</returns>
         [HttpGet("{repositoryName}")]
         public async Task<ActionResult<IEnumerable<CommitDto>>> GetAllRepositoryCommits(string repositoryName)
         {
