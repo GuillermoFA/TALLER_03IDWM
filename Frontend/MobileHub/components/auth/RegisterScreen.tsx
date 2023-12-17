@@ -27,13 +27,13 @@ const styles = StyleSheet.create({
 });
 
 const RegisterScreen = () => {
-  const [fullName, setFullName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [rut, setRut] = useState('');
   const [birthYear, setBirthYear] = useState('');
   const [errorsAxios, setErrorsAxios] = useState('');
   const [errors, setErrors] = useState({
-    fullName: '',
+    name: '',
     email: '',
     rut: '',
     birthYear: '',
@@ -42,7 +42,7 @@ const RegisterScreen = () => {
 
   const clearError = () => {
     setErrors({
-      fullName: '',
+      name: '',
       email: '',
       rut: '',
       birthYear: '',
@@ -53,7 +53,7 @@ const RegisterScreen = () => {
     // Función genérica para cambiar el valor de un campo y limpiar errores
     switch (field) {
       case 'fullName':
-        setFullName(value);
+        setName(value);
         break;
       case 'email':
         setEmail(value);
@@ -103,9 +103,9 @@ const RegisterScreen = () => {
       setLoading(true);
 
       // Validaciones de campos vacíos
-      if (!fullName || !email || !rut || !birthYear) {
+      if (!name || !email || !rut || !birthYear) {
         setErrors({
-          fullName: fullName ? '' : 'Nombre es requerido.',
+          name: name ? '' : 'Nombre es requerido.',
           email: email ? '' : 'Correo Electrónico es requerido.',
           rut: rut ? '' : 'RUT es requerido.',
           birthYear: birthYear ? '' : 'Año de Nacimiento es requerido.',
@@ -117,12 +117,12 @@ const RegisterScreen = () => {
         email,
         rut,
         birthYear,
-        fullName,
+        name,
       });
 
       console.log('Respuesta de la API:', response.data);
 
-      if (response.data && response.data.success) {
+      if (response.data) {
         // Registro exitoso
         await AsyncStorage.setItem('token', response.data.token);
         handleRegisterSuccess();
@@ -130,10 +130,6 @@ const RegisterScreen = () => {
         // Error en el registro, actualiza los mensajes de error según la respuesta del backend
         if (response.data.errors) {
           setErrors(response.data.errors);
-        } else {
-          console.error('Error en el registro:', response.data);
-          // Establece un mensaje de error genérico si es necesario
-          displayError('Ocurrió un error inesperado. Por favor, intenta nuevamente.');
         }
       }
     } catch (error) {
@@ -156,11 +152,11 @@ const RegisterScreen = () => {
         label="Nombre Completo"
         placeholder="Guillermo Josué Fuentes Ávila"
         placeholderTextColor="#B2B2B2"
-        value={fullName}
+        value={name}
         onChangeText={(text) => handleFieldChange('fullName', text)}
         mode="outlined"
       />
-      <Text style={styles.errorText}>{errors.fullName}</Text>
+      <Text style={styles.errorText}>{errors.name}</Text>
 
       <TextInput
         style={styles.form}
@@ -200,7 +196,7 @@ const RegisterScreen = () => {
       </Button>
 
       <Snackbar
-        visible={!!(errors.fullName || errors.email || errors.rut || errors.birthYear)}
+        visible={!!(errors.name || errors.email || errors.rut || errors.birthYear)}
         onDismiss={clearError}
         action={{
           label: 'OK',

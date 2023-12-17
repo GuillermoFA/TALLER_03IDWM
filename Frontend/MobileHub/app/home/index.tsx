@@ -3,7 +3,7 @@ import HomeScreen from "../../components/home/HomeScreen";
 
 const HomeIndex = () => {
     return (
-        <HomeScreen />
+        <HomeScreen navigation={navigator} />
     );
 }
 
