@@ -48,6 +48,11 @@ cd /backend
 cd /mobilehub
 ```
 
+### 3. Copia el archivo .env.example a .env para poder ejecutar el proyecto
+```cli
+Copy .env.example .env
+```
+
 ### 3. Restauración de Dependencias:
 
 Ejecuta el siguiente comando para restaurar las dependencias del proyecto:
