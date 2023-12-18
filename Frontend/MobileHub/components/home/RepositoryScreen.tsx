@@ -7,7 +7,10 @@ import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Link, router } from "expo-router";
 
-
+/**
+ * Estilos para el componente.
+ * @param {StyleSheet} styles
+ */
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -43,19 +46,21 @@ const style = StyleSheet.create({
     },
 });
 
-
-
+// PROP para el consumo de la API para ir a un repositorio
 interface Props {
     repositoryName: string;
 }
 
-
+/**
+ * const RepositoryScreen contiene la lógica de la pantalla de repositorios
+ * @returns {RepositoryScreen}
+ */
 const RepositoryScreen = ({ repositoryName }: Props) => {
     console.log("repositoryName:", repositoryName);
     const [commits, setCommits] = useState<Commit[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const url = `http://192.168.1.183:5245/Repositories/${repositoryName}`;
+    const url = `http://192.168.1.183:5245/Repositories/${repositoryName}`; // URL para ir a un repositorio
 
 
     useEffect(() => {
@@ -81,6 +86,10 @@ const RepositoryScreen = ({ repositoryName }: Props) => {
         );
     }
 
+    /**
+     * Función para volver atrás
+     * @returns {handleBackPress}
+     */
     const handleBackPress = () => {
         router.back();
         console.log('Volví atrás..');

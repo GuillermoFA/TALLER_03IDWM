@@ -6,6 +6,11 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 
+
+/**
+ * Estilos para el componente.
+ * @param {StyleSheet} styles
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,6 +28,10 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * const RegisterScreen contiene la lógica del register
+ * @returns {LoginScreen}
+ */
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,30 +39,56 @@ const LoginScreen = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Función para manejar el cambio de texto en el campo de correo electrónico
+   * @param text 
+   */
   const handleEmailChange = (text: string) => {
     setEmail(text);
   };
 
+  /**
+   * Función para manejar el cambio de texto en el campo de contraseña
+   * @param text 
+   */
   const handlePasswordChange = (text: string) => {
     setPassword(text);
   };
 
+  /**
+   * Función para manejar el cambio de texto en el campo de contraseña
+   * @param text 
+   */
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  /**
+   * Función para limpiar los errores
+   */
   const clearError = () => {
     setError('');
   };
 
+  /**
+   * Función para mostrar errores
+   * @param message 
+   */
   const displayError = (message: string) => {
     setError(message);
   };
 
+  /**
+   * Función para manejar el éxito del inicio de sesión
+   */
   const handleLoginSuccess = () => {
     router.push('/home/');
   };
 
+  /**
+   * Función para manejar errores de axios
+   * @param error 
+   */
   const handleAxiosError = (error: any) => {
     if (error.response) {
       if (error.response.status === 400) {
@@ -70,10 +105,13 @@ const LoginScreen = () => {
     }
   };
 
+  /**
+   * Función para manejar el submit del formulario
+   */
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://192.168.1.183:5245/Auth/login', {
+      const response = await axios.post('http://192.168.1.183:5245/Auth/login', { // LLAMANDO A LA API
         email,
         password,
       });

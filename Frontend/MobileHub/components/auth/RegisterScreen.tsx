@@ -6,6 +6,11 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 
+/**
+ * Estilos para el componente.
+ * @param {StyleSheet} styles
+ * 
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -26,7 +31,16 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * const RegisterScreen contiene la lógica del register
+ * @returns {RegisterScreen}
+ */
 const RegisterScreen = () => {
+
+  /**
+   * useState para el manejo de los campos del formulario
+   * @param {useState} useState
+   */
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [rut, setRut] = useState('');
@@ -40,6 +54,9 @@ const RegisterScreen = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Función para limpiar los errores
+   */
   const clearError = () => {
     setErrors({
       name: '',
@@ -49,6 +66,11 @@ const RegisterScreen = () => {
     });
   };
 
+  /**
+   * Función para cambiar el valor de un campo y limpiar errores
+   * @param {any} field
+   * @param {any} value
+   */
   const handleFieldChange = (field : any, value : any) => {
     // Función genérica para cambiar el valor de un campo y limpiar errores
     switch (field) {
@@ -70,14 +92,25 @@ const RegisterScreen = () => {
     clearError();
   };
 
+  /**
+   * Función para manejar el registro exitoso
+   */
   const handleRegisterSuccess = () => {
     router.push('/auth/login');
   };
 
+  /**
+   * Función para mostrar errores
+   * @param {any} message
+   */
   const displayError = (message : any) => {
     setErrorsAxios(message);
   };
 
+  /**
+   * Función para manejar errores de axios
+   * @param {any} error
+   */
   const handleAxiosError = (error: any) => {
     if (error.response) {
       if (error.response.status === 400) {
@@ -98,6 +131,9 @@ const RegisterScreen = () => {
     }
   };
 
+  /**
+   * Función para manejar el submit del formulario
+   */
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -113,6 +149,7 @@ const RegisterScreen = () => {
         return;
       }
 
+      // Validaciones de formato SOLICITUD DE API
       const response = await axios.post('http://192.168.1.183:5245/Auth/register', {
         email,
         rut,

@@ -4,7 +4,10 @@ import { StyleSheet, Image } from "react-native";
 import { Link } from "expo-router";
 
 
-
+/**
+ * Estilos de la pantalla de inicio
+ * @param {StyleSheet} styles
+ */
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -22,6 +25,10 @@ const style = StyleSheet.create({
     }
 });
 
+/**
+ * const HomeScreen contiene la lógica de la pantalla de inicio
+ * @returns {HomeScreen}
+ */
 const HomeScreen = () => {
     return (
         <SafeAreaView style={style.container}>

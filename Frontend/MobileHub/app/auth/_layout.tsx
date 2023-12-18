@@ -15,7 +15,10 @@ const handleBackPress = () => {
     console.log('Volví atrás..');
 };
 
-
+/**
+ * Enrutamiento de la pantalla de inicio
+ * @returns {HomeLayout}
+ */
 const HomeLayout = () => {
     return (
         <>

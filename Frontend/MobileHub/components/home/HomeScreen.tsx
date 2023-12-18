@@ -8,7 +8,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, router } from "expo-router";
 
-
+/**
+ * Estilos de la pantalla de inicio
+ * @param {StyleSheet} styles
+ */
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -44,6 +47,10 @@ const style = StyleSheet.create({
     },
 });
 
+/**
+ * Pantalla home - contiene la lógica de la pantalla de inicio
+ * @returns {HomeScreen}
+ */
 const HomeScreen = () => {
     const [repos, setRepos] = useState<Repository[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
