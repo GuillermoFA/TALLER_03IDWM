@@ -2,13 +2,38 @@
 
 ## Frontend (React-native)
 
+### 1. Instalación de Node.js y Expo CLI
+Asegúrate de tener Node.js instalado en tu sistema.
+Luego, instala Expo CLI globalmente utilizando el siguiente comando:
+```cli
+npm install -g expo-cli
+```
+
+### 2. Navegación a la carpeta del Proyecto Backend
+Ahora con el frontend abra una terminal y navege a la carpeta del proyecto backend:
+```cli
+cd /frontend
+cd /mobilehub
+```
+
+
+### 3. Instalación de Dependencias:
+Ejecuta el siguiente comando para restaurar las dependencias del proyecto:
+```cli
+npm install
+```
+
+### 4. Ejecución del proyecto React Native
+```cli
+npx expo start
+```
 
 
 ## Backend (Dotnet 8)
 
 ### 1. Instalación de Dotnet SDK 8
 
-Descarga e instala el SDK de Dotnet 7 desde el sitio oficial: : [Dotnet8](https://dotnet.microsoft.com/es-es/download/dotnet/8.0).
+Descarga e instala el SDK de Dotnet 8 desde el sitio oficial: : [Dotnet8](https://dotnet.microsoft.com/es-es/download/dotnet/8.0).
 
 ### 2. Navegación a la carpeta del Proyecto Backend
 
