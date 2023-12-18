@@ -2,22 +2,28 @@
 
 ## Frontend (React-native)
 
-### 1. Instalación de Node.js y Expo CLI
+### 1. Navegación a la Carpeta del Proyecto ReactNative
+
+Abre la carpeta del proyecto y mediante comando cmd ejecuta la terminal de Visual Studio Code o la ide que tengas, para ejecutarlo con Visual Studio es lo siguiente:
+```cli
+code .
+```
+
+### 2. Instalación de Node.js y Expo CLI
 Asegúrate de tener Node.js instalado en tu sistema.
 Luego, instala Expo CLI globalmente utilizando el siguiente comando:
 ```cli
 npm install -g expo-cli
 ```
 
-### 2. Navegación a la carpeta del Proyecto Backend
+### 3. Navegación a la carpeta del Proyecto Backend
 Ahora con el frontend abra una terminal y navege a la carpeta del proyecto backend:
 ```cli
 cd /frontend
 cd /mobilehub
 ```
 
-
-### 3. Instalación de Dependencias:
+### 4. Instalación de Dependencias:
 Ejecuta el siguiente comando para restaurar las dependencias del proyecto:
 ```cli
 npm install
@@ -27,7 +33,6 @@ npm install
 ```cli
 npx expo start
 ```
-
 
 ## Backend (Dotnet 8)
 
