@@ -9,18 +9,18 @@ Abre la carpeta del proyecto y mediante comando cmd ejecuta la terminal de Visua
 code .
 ```
 
-### 2. Instalación de Node.js y Expo CLI
+### 2. Navegación a la carpeta del Proyecto Backend
+Ahora con el frontend abra una terminal y navege a la carpeta del proyecto backend:
+```cli
+cd frontend
+cd mobilehub
+```
+
+### 3. Instalación de Node.js y Expo CLI
 Asegúrate de tener Node.js instalado en tu sistema.
 Luego, instala Expo CLI globalmente utilizando el siguiente comando:
 ```cli
 npm install -g expo-cli
-```
-
-### 3. Navegación a la carpeta del Proyecto Backend
-Ahora con el frontend abra una terminal y navege a la carpeta del proyecto backend:
-```cli
-cd /frontend
-cd /mobilehub
 ```
 
 ### 4. Instalación de Dependencias:
@@ -44,8 +44,8 @@ Descarga e instala el SDK de Dotnet 8 desde el sitio oficial: : [Dotnet8](https:
 
 Siguiendo los mismos pasos que realizó con el Frontend, ahora con el backend abra una terminal y navege a la carpeta del proyecto backend:
 ```cli
-cd /backend
-cd /mobilehub
+cd backend
+cd mobilehub
 ```
 
 ### 3. Copia el archivo .env.example a .env para poder ejecutar el proyecto
