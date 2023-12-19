@@ -9,18 +9,18 @@ Abre la carpeta del proyecto y mediante comando cmd ejecuta la terminal de Visua
 code .
 ```
 
-### 2. Instalación de Node.js y Expo CLI
+### 2. Navegación a la carpeta del Proyecto Backend
+Ahora con el frontend abra una terminal y navege a la carpeta del proyecto backend:
+```cli
+cd frontend
+cd mobilehub
+```
+
+### 3. Instalación de Node.js y Expo CLI
 Asegúrate de tener Node.js instalado en tu sistema.
 Luego, instala Expo CLI globalmente utilizando el siguiente comando:
 ```cli
 npm install -g expo-cli
-```
-
-### 3. Navegación a la carpeta del Proyecto Backend
-Ahora con el frontend abra una terminal y navege a la carpeta del proyecto backend:
-```cli
-cd /frontend
-cd /mobilehub
 ```
 
 ### 4. Instalación de Dependencias:
@@ -44,25 +44,50 @@ Descarga e instala el SDK de Dotnet 8 desde el sitio oficial: : [Dotnet8](https:
 
 Siguiendo los mismos pasos que realizó con el Frontend, ahora con el backend abra una terminal y navege a la carpeta del proyecto backend:
 ```cli
-cd /backend
-cd /mobilehub
+cd backend
+cd mobilehub
 ```
 
-### 3. Restauración de Dependencias:
+### 3. Copia el archivo .env.example a .env para poder ejecutar el proyecto
+```cli
+Copy .env.example .env
+```
+
+### 4. Cambio de configuraciones por las propias: ( PASO IMPORTANTE ) 
+```
+En el archivo .env que se creó. En el .env debes poner la IP de ejecucion del frontend que proporciona expo.
+
+LUEGO EN LA RUTA: \Backend\MobileHub\Properties en launchSettings tambien debes poner TU IP LOCAL IPV4
+```
+
+
+### 5. Restauración de Dependencias:
 
 Ejecuta el siguiente comando para restaurar las dependencias del proyecto:
 ```cli
 dotnet restore
 ```
 
-### 4. Asegurate que la base de datos esté operativa. (Opcional)
+### 6. Asegurate que la base de datos esté operativa. (Opcional)
 
 Ejecuta el siguiente comando para corroborrar que existe una base de datos en el sistema.
 ```cli
 dotnet ef database update
 ```
 
-### 5. Ejecucion del proyecto Dotnet 
+### 7. Ejecucion del proyecto Dotnet 
 ```cli
 dotnet run
 ```
+
+# IMPORTANTE: 
+Reemplace la ip sin modificar el puerto por su IPV4 en las siguientes rutas: RUTAS API
+```RUTAS API
+\Backend\MobileHub\Properties -> launchSettings LINEA 9 
+\Backend\MobileHub -> env LINEA 2 
+\Frontend\MobileHub\components\auth -> LoginScreen LINEA 114
+\Frontend\MobileHub\components\auth -> RegisterSCreen LINEA 153
+\Frontend\MobileHub\components\home -> HomeScreen LINEA 58
+\Frontend\MobileHub\components\home -> ReposityScreen LINEA 63
+```
+
