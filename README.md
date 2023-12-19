@@ -53,21 +53,32 @@ cd mobilehub
 Copy .env.example .env
 ```
 
-### 3. Restauración de Dependencias:
+### 4. Cambio de configuraciones por las propias:
+```
+En el archivo .env que se creó. En el .env debes poner la IP de ejecucion del frontend que proporciona expo.
+
+LUEGO EN LA RUTA: \Backend\MobileHub\Properties en launchSettings tambien debes poner TU IP LOCAL IPV4
+```
+
+
+### 5. Restauración de Dependencias:
 
 Ejecuta el siguiente comando para restaurar las dependencias del proyecto:
 ```cli
 dotnet restore
 ```
 
-### 4. Asegurate que la base de datos esté operativa. (Opcional)
+### 6. Asegurate que la base de datos esté operativa. (Opcional)
 
 Ejecuta el siguiente comando para corroborrar que existe una base de datos en el sistema.
 ```cli
 dotnet ef database update
 ```
 
-### 5. Ejecucion del proyecto Dotnet 
+### 7. Ejecucion del proyecto Dotnet 
 ```cli
 dotnet run
 ```
+
+# IMPORTANTE: 
+LA API NO SE CONSUME COMO LOCALHOST SINO QUE ESTA PROPORCIONADA LA IP IPV4 DE TU RED LOCAL. DEBES OBTENER TU IP IPV4 ES DECIR: PARA EL CONSUMO DE API HACIA EL FRONT DEBES CAMBIAR TODAS LAS PETICIONES QUE SON REALIZADAS POR LA IP LOCAL A TU IP LOCAL
