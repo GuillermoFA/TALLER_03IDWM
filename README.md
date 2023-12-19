@@ -53,7 +53,7 @@ cd mobilehub
 Copy .env.example .env
 ```
 
-### 4. Cambio de configuraciones por las propias:
+### 4. Cambio de configuraciones por las propias: ( PASO IMPORTANTE ) 
 ```
 En el archivo .env que se creó. En el .env debes poner la IP de ejecucion del frontend que proporciona expo.
 
@@ -81,4 +81,13 @@ dotnet run
 ```
 
 # IMPORTANTE: 
-LA API NO SE CONSUME COMO LOCALHOST SINO QUE ESTA PROPORCIONADA LA IP IPV4 DE TU RED LOCAL. DEBES OBTENER TU IP IPV4 ES DECIR: PARA EL CONSUMO DE API HACIA EL FRONT DEBES CAMBIAR TODAS LAS PETICIONES QUE SON REALIZADAS POR LA IP LOCAL A TU IP LOCAL
+LA API NO SE CONSUME COMO LOCALHOST SINO QUE ESTA PROPORCIONADA LA IPV4 DE TU RED LOCAL. DEBES OBTENER TU IP IPV4 ES DECIR: PARA EL CONSUMO DE API HACIA EL FRONT DEBES CAMBIAR TODAS LAS PETICIONES QUE SON REALIZADAS POR LA IP LOCAL A TU IP LOCAL EN LAS SIGUIENTES RUTAS:
+```RUTAS API
+\Backend\MobileHub\Properties -> launchSettings LINEA 9 
+\Backend\MobileHub -> env LINEA 2 
+\Frontend\MobileHub\components\auth -> LoginScreen LINEA 114
+\Frontend\MobileHub\components\auth -> RegisterSCreen LINEA 153
+\Frontend\MobileHub\components\home -> HomeScreen LINEA 58
+\Frontend\MobileHub\components\home -> ReposityScreen LINEA 63
+```
+
